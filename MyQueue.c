@@ -150,7 +150,9 @@ bool myQueueEmpty(MyQueue* obj) {
 }
 
 void myQueueFree(MyQueue* obj) {
-
+    StackDestory(&obj->_pushSt);
+    StackDestory(&obj->_popSt);
+    free(obj);
 }
 
 /**
