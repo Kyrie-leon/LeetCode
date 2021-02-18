@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//Method 1
+//Method 1时间复杂度O(m+n)^2效率低
 void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
 	//1.将nums2存入到nums1中
 	for (int i = m, j = 0; i<m + n; i++, j++)
@@ -23,9 +23,17 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
 	}
 }
 
-int main()
-{
-	int nums1[6] = { 4,5,6,0,0,0 };
-	int nums2[3] = { 1,2,3 };
-	merge(nums1, 6, 3, nums2, 3, 3);
+//时间复杂度O(m+n),空间复杂度O(1)
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
+    //三个指针分别指向数组末尾
+    int p1 = m-1;
+    int p2 = n-1;
+    int p = m+n-1;
+    while(p1 >= 0 && p2 >= 0)
+    {
+        nums1[p--] = nums1[p1] > nums2[p2] ? nums1[p1--] : nums2[p2--];
+    }
+	//数组2漏存的数字全部填入
+    while(p2 >= 0)
+        nums1[p--] = nums2[p2--];
 }
