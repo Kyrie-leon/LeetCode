@@ -264,6 +264,32 @@ public:
 };
 ```
 
+# 字符串相乘
+
+## [43. 字符串相乘](https://leetcode-cn.com/problems/multiply-strings/)
+
+难度中等595
+
+给定两个以字符串形式表示的非负整数 `num1` 和 `num2`，返回 `num1` 和 `num2` 的乘积，它们的乘积也表示为字符串形式。
+
+**示例 1:**
+
+```
+输入: num1 = "2", num2 = "3"
+输出: "6"
+```
+
+**示例 2:**
+
+```
+输入: num1 = "123", num2 = "456"
+输出: "56088"
+```
+
+## 解题思路
+
+
+
 #  4. 反转字符串
 
 ## [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
@@ -312,6 +338,79 @@ public:
     }
 };
 ```
+
+## [541. 反转字符串 II](https://leetcode-cn.com/problems/reverse-string-ii/)
+
+难度简单118
+
+给定一个字符串 `s` 和一个整数 `k`，你需要对从字符串开头算起的每隔 `2k` 个字符的前 `k` 个字符进行反转。
+
+- 如果剩余字符少于 `k` 个，则将剩余字符全部反转。
+- 如果剩余字符小于 `2k` 但大于或等于 `k` 个，则反转前 `k` 个字符，其余字符保持原样。
+
+ 
+
+**示例:**
+
+```c
+输入: s = "abcdefg", k = 2
+输出: "bacdfeg"
+```
+
+## 解题思路
+
+## [557. 反转字符串中的单词 III](https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/)
+
+难度简单280
+
+给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+
+ 
+
+**示例：**
+
+```c
+输入："Let's take LeetCode contest"
+输出："s'teL ekat edoCteeL tsetnoc"
+```
+
+## 解题思路
+
+使用快慢指针
+
+1. 定义快指针fast和慢指针low，快指针先走遇到空格字符或者字符串结尾就停下来，这时候快指针指向的位置就是空格字符的位置或者字符串结束标识符'\0'，快指针用于切割字符串
+2. 定义一个单词右指针，起始位置为fast-1
+3. 交换慢指针low和right指针所指内容
+4. 交换结束后，fast指向下一个位置，即空格字符后的位置或者‘\0’后的位置，low也等于fast位置
+
+![](https://gitee.com/Kyrie-leon/blog-image/raw/master/LeetCode//20210329104209.png)
+
+```c
+class Solution {
+public:
+    string reverseWords(string s) {
+        int low = 0, fast = 0;
+        while(fast < s.size())
+        {
+            while(fast < s.size() && s[fast] != ' ')
+            {
+                ++fast;
+            }
+            int right = fast - 1;
+            while(low < right)
+            {
+                swap(s[low], s[right]);
+                ++low;
+                --right;
+            }
+            low = fast += 1;
+        }
+        return s;
+    }
+};
+```
+
+
 
 # 5. 验证回文字符串
 
