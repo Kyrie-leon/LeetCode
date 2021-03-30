@@ -359,6 +359,33 @@ public:
 
 ## 解题思路
 
+题目读起来非常难懂，似乎是英文直译过来的，其实就是将字符串的每2k个字符分成一个块，将这一个块内的前k个字符逆置，对于分的最后一个2k字符块，如果少于k个就全部翻转
+
+思路理清后，直接实现即可，定义cur指针每次走2k个位置，在2k的字符区间内，使用双指针逆置，left为cur，right为left+k-1，这里需要注意有可能区间字符少于left+k-1
+
+```c
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        int cur = 0;
+        int len = s.size();
+        while(cur < len)
+        {
+            int left = cur;
+            int right = min(left + k - 1, len - 1);
+            while(left < right)
+            {
+                swap(s[left++], s[right--]);
+            }
+            cur += 2*k;
+        }
+        return s;
+    }
+};
+```
+
+
+
 ## [557. 反转字符串中的单词 III](https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/)
 
 难度简单280
