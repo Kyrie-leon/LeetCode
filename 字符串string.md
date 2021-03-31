@@ -1,4 +1,6 @@
-# 1. 找出字符串中第一个只出现一次的字符
+# 字符串常见面试题
+
+# 1.找出字符串中第一个只出现一次的字符
 
 ## 输入描述:
 
@@ -287,6 +289,10 @@ public:
 ```
 
 ## 解题思路
+
+[本体思路]:https://leetcode-cn.com/problems/multiply-strings/solution/gao-pin-mian-shi-xi-lie-zi-fu-chuan-cheng-fa-by-la/
+
+
 
 
 
