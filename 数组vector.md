@@ -45,7 +45,138 @@ public:
 };
 ```
 
+#### [137. 只出现一次的数字 II](https://leetcode-cn.com/problems/single-number-ii/)
+
+给定一个**非空**整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。
+
+**说明：**
+
+你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？
+
+**示例 1:**
+
+```
+输入: [2,2,3,2]
+输出: 3
+```
+
+**示例 2:**
+
+```
+输入: [0,1,0,1,0,1,99]
+输出: 99
+```
+
+## 解题思路
+
+![](https://gitee.com/Kyrie-leon/blog-image/raw/master/C++/20210409093546.png)
+
+```c
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int ret = 0;
+        for(int i = 0; i < 32; ++i)
+        {
+            int sum = 0;
+            for(int j = 0; j < nums.size(); ++j)
+            {
+                sum += (nums[j] >> i) & 1;
+            }
+            //还原
+            ret ^= (sum % 3) << i;
+        }
+
+        return ret;
+    }
+};
+```
+
+
+
+#### [260. 只出现一次的数字 III](https://leetcode-cn.com/problems/single-number-iii/)
+
+难度中等387
+
+给定一个整数数组 `nums`，其中恰好有两个元素只出现一次，其余所有元素均出现两次。 找出只出现一次的那两个元素。你可以按 **任意顺序** 返回答案。
+
+ 
+
+**进阶：**你的算法应该具有线性时间复杂度。你能否仅使用常数空间复杂度来实现？
+
+ 
+
+**示例 1：**
+
+```
+输入：nums = [1,2,1,3,2,5]
+输出：[3,5]
+解释：[5, 3] 也是有效的答案。
+```
+
+**示例 2：**
+
+```
+输入：nums = [-1,0]
+输出：[-1,0]
+```
+
+**示例 3：**
+
+```
+输入：nums = [0,1]
+输出：[1,0]
+```
+
+## 解题思路
+
+1. 全部两两异或得出异或结果xorRet
+2. 查看异或结果为1的位divFlag
+3. 将divFlag为1的数字划为group1，其余的为group2
+4. 对两个组异或，最终结果就是答案
+
+```c
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int xorRet = 0;
+        for(auto num:nums)
+        {
+            xorRet ^= num;
+        }
+
+        int divFlag = 0;
+        for(; divFlag < 32; ++divFlag)
+        {
+            if((xorRet >> divFlag) & 1 == 1)
+            {
+                break;
+            }
+        }
+        
+        int ret1 = 0, ret2 = 0;
+        for(auto num:nums)
+        {
+            if((num>>divFlag) & 1 == 1)
+            {
+                ret1 ^=num;
+            }
+            else
+            {
+                ret2 ^=num;
+            }
+        }
+       
+        return {ret1, ret2};
+    }
+};
+```
+
+
+
 # 2.杨辉三角
+
+
 
 #### [118. 杨辉三角](https://leetcode-cn.com/problems/pascals-triangle/)
 
@@ -59,7 +190,7 @@ public:
 
 **示例:**
 
-```
+```c
 输入: 5
 输出:
 [
@@ -72,6 +203,40 @@ public:
 ```
 
 ## 解题思路
+
+1. 先创建数组vv
+
+```c
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> vv(numRows);
+ 
+        for(size_t i = 0; i < vv.size(); ++i)
+        {
+            vv[i].resize(i+1, 0);
+            vv[i][0] = 1;
+            vv[i][vv[i].size()-1] = 1;
+        }
+
+        for(size_t i = 0; i < vv.size(); ++i)
+        {
+            for(size_t j = 0; j < vv[i].size(); ++j)
+            {
+                if(vv[i][j] == 0)
+                {
+                    vv[i][j] = vv[i-1][j-1] + vv[i-1][j];
+                }
+            }
+        }
+
+        return vv;
+        
+    }
+};
+```
+
+
 
 # 3. 数组中出现次数超过一半的数字
 
