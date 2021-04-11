@@ -204,7 +204,7 @@ public:
 
 ## 解题思路
 
-1. 先创建数组vv
+1. 先创建数组vv，然后填充
 
 ```c
 class Solution {
