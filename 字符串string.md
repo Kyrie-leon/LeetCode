@@ -522,3 +522,72 @@ public:
 };
 ```
 
+day3每日一题编程题1
+
+思路：
+
+定一个vector里面存放每个字串的长度，起始位置和结束位置，最后找到最长的长度然后输出即可
+
+```c++
+#include<iostream>
+#include<string>
+#include<iostream>
+#include<vector>
+using namespace std;
+
+bool IsNum(char c)
+{
+	if (c >= '0' && c <= '9')
+		return true;
+	return false;
+}
+
+int main()
+{
+	string s;
+	vector<int> ret;    //存放长度和下标
+	int j = 0;    //vector下标
+	int len = 0;
+	int begin = 0;
+	int end = 0;
+	cin >> s;
+	//第一遍查找最长的数组
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		if (IsNum(s[i]))
+		{
+			begin = i;
+			while (IsNum(s[i]))
+			{
+				i++;
+			}
+			end = i;
+			ret.push_back(end - begin);
+			ret.push_back(begin);
+			ret.push_back(end);
+		}
+	}
+	
+	//第二遍查找最大值
+	int max = 0;
+	int index = 0;
+	for(int i = 0; i < ret.size(); i+=3)
+	{
+		if (max < ret[i])
+		{
+			max = ret[i];
+			index = i;
+		}
+		
+	}
+
+	for(int i = ret[index+1]; i < ret[index+2]; ++i)
+	{
+	cout<<s[i];
+	}
+	cout<<endl;
+	
+	return 0;
+}
+```
+
