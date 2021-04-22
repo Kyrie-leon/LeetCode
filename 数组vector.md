@@ -371,3 +371,31 @@ public:
 };
 ```
 
+day04
+
+思路：利用方程式求解，最后验证是否满足等式即可
+
+```
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main()
+{
+    int f1,f2,f3,f4;
+    int a,b,c;
+    cin >> f1 >> f2 >> f3 >> f4;
+    a = (f1 + f3)/2;
+    b = (f2 + f4)/2;
+    c = f4 - b;
+    if( (a - b == f1)
+      &&(b - c == f2)
+      &&(a + b == f3)
+      &&(b + c == f4))
+        cout << a << " " << b << " " << c << endl;
+    else
+        cout << "No" <<endl;
+    return 0;
+}
+```
+
