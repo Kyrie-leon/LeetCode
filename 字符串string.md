@@ -591,3 +591,43 @@ int main()
 }
 ```
 
+day04
+
+思路：
+
+进值转化的公式就是M%N,然后M/N，通过一个数字表来转化但要记得反转
+
+注意细节：存在负数，设一个flag
+
+```
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+    int M,N;
+    int flag = 0;
+    string table="0123456789ABCDEF";
+    string ret;
+    cin>> M >> N;
+    if(M < 0)
+    {
+        M = - M;
+        flag = 1;
+    }
+    while(M)
+    {
+        ret += table[M%N];
+        M = M/N;
+    }
+    
+    if(flag)
+        ret += '-';
+    reverse(ret.begin(),ret.end());
+    cout<< ret <<endl;
+    return 0;
+}
+```
+
