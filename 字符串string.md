@@ -522,7 +522,7 @@ public:
 };
 ```
 
-day3每日一题编程题1
+## day3每日一题编程题1
 
 思路：
 
@@ -591,7 +591,7 @@ int main()
 }
 ```
 
-day04
+## day04
 
 思路：
 
@@ -629,5 +629,64 @@ int main()
     cout<< ret <<endl;
     return 0;
 }
+```
+
+## day6 把字符串转换成整数
+
+### 思路
+
+字符串转整数就是str[i] - '0'就可以转为int
+
+从后往前遍历到str的第2(下标1)个位置停下来，定义一个ret=0，一个进位next=1，转化公式就是ret += (str[i] - '0')*next，每往前走一个数字就让next*10
+
+对第1（下标0）个位置做检测，如果是负数就*-1，如果是正数就返回ret，如果是数字就转换，如果是其他字符直接返回0；
+
+```c
+class Solution {
+public:
+    bool IsNum(char ch)
+    {
+        if(ch >= '0' && ch <= '9')
+            return true;
+        return false;
+    }
+    
+    int StrToInt(string str) {
+        if(str.size() == 0)
+            return 0;
+
+        int ret = 0;
+        int next = 1;
+        for(int i = str.size() - 1; i > 0; --i)
+        {
+            if(IsNum(str[i]))
+            {
+                ret += (str[i] - '0')*next;
+                next *= 10;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        
+        if(str[0] == '-')
+        {
+            ret *= -1;
+            return ret;
+        }
+        else if(str[0] == '+')
+        {
+            return ret;
+        }
+        else if(IsNum(str[0]))
+        {
+            ret += (str[0] - '0')*next;
+            return ret;
+        }
+        
+        return 0;
+    }
+};
 ```
 
