@@ -690,3 +690,124 @@ public:
 };
 ```
 
+## day7
+
+### Fib数列
+
+#### 解题思路
+
+迭代循环记录n的前一个数字num1和后一个数字num，然后计算差值最小的返回
+
+```c
+#include<iostream>
+using namespace std;
+
+int Fib(int n)
+{
+    int num = 1;
+    int num1 = 0;
+    int num2 = 1;
+    if(n < 2)
+    {
+        if(n == 0)
+            return 0;
+        else
+            return n < n - 1? n:n-1;
+    }
+    for(int i = 3; num <= n; ++i)
+    {
+        num2 = num1;
+        num1 = num;
+        num = num1 + num2;
+    }
+    return  n - num1 < num - n ? n - num1: num - n;
+}
+
+int main()
+{
+    int n = 0;
+    int ret = 0;
+    cin >> n;
+    ret = Fib(n);
+    cout << ret << endl;
+    return 0;
+}
+```
+
+
+
+### 有效括号
+
+#### 解题思路：
+
+1. 栈：左括号入栈，碰见右括号让左括号出栈。细节：栈为空需要判断
+2. 计数器：设一个计数器计算左括号的数字，右括号让计数器减1
+
+```
+//1
+class Parenthesis {
+public:
+	bool chkParenthesis(string A, int n) {
+		// write code here
+		if (n < 2)
+			return false;
+		stack<char> s;
+		for (int i = 0; i < n; ++i)
+		{
+			if (A[i] == '(')
+			{
+				s.push(A[i]);
+			}
+			else if (A[i] == ')')
+			{
+				if (!s.empty() && s.top() == '(')
+					s.pop();
+				else
+					return false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		if (s.empty())
+			return true;
+		return false;
+	}
+};
+```
+
+```
+//2
+class Parenthesis {
+public:
+	bool chkParenthesis(string A, int n) {
+		// write code here
+		if (n < 2)
+			return false;
+		int count = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			if (A[i] == '(')
+			{
+				count++;
+			}
+			else if (A[i] == ')')
+			{
+				count--;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		if (count != 0)
+			return false;
+		return true;
+
+	}
+};
+```
+
+
+
