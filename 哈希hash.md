@@ -57,3 +57,30 @@ public:
 };
 ```
 
+## [387. 字符串中的第一个唯一字符](https://leetcode-cn.com/problems/first-unique-character-in-a-string/)
+
+```c++
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        if(s.size() == 0)
+            return -1;
+        int letterArr[26] = {0};
+        int i = 0;
+        for(; i < s.size(); ++i)
+        {
+            ++letterArr[(s[i]-'a')];
+        }
+
+        for(i =0; i < s.size(); ++i)
+        {
+            if(letterArr[(s[i]-'a')] == 1)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+```
+
