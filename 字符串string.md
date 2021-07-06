@@ -811,3 +811,95 @@ public:
 
 
 
+# day44
+
+## 骆驼命名法
+
+思路：
+
+遍历到_就擦除返回迭代器，同时将后面这个字符-32变为大写
+
+```c++
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main()
+{
+    string cString;
+    while(cin >> cString)
+    {
+        auto it = cString.begin();
+        while(it != cString.end())
+        {
+            if(*it == '_')
+            {
+                it = cString.erase(it);
+                *it -= 32;
+            }
+            ++it;
+        }
+        cout << cString << endl;
+    }
+    return 0;
+}
+```
+
+## 单词倒排
+
+思路：
+
+反向迭代器依次遍历，遇到字母就入栈，遇到非字母字符就全部出栈，同时迭代器继续后移直到下一个字母
+
+注意细节：
+
+有可能字符遍历完，栈中还有字母因此需要遍历结束后将栈中元素全部出栈
+
+
+
+```c++
+#include<iostream>
+#include<string>
+#include<stack>
+using namespace std;
+
+int main()
+{
+    string s;
+    while(getline(cin, s))
+    {
+        auto it = s.rbegin();
+        //while(!isalpha(*it))
+        //    ++it;
+        stack<char> st;
+        while(it != s.rend())
+        {
+            if(isalpha(*it))
+            {
+                st.push(*it);
+                ++it;
+            }
+            else
+            {
+                while(!st.empty())
+                {
+                    cout << st.top();
+                    st.pop();
+                }
+                while(it != s.rend() && !isalpha(*it))
+                    ++it;
+                cout << ' ';
+            }
+        }
+        while(!st.empty())
+        {
+            cout << st.top();
+            st.pop();
+        }
+        cout << endl;
+        //cout << ret << endl;
+    }
+    return 0;
+}
+```
+
