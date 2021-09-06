@@ -238,7 +238,7 @@ public:
 };
 ```
 
-#### [217. 存在重复元素](https://leetcode-cn.com/problems/contains-duplicate/)
+# [217. 存在重复元素](https://leetcode-cn.com/problems/contains-duplicate/)
 
 难度简单402
 
@@ -289,4 +289,139 @@ public:
     }
 };c
 ```
+
+# **NC61** **两数之和**
+
+描述
+
+给出一个整数数组，请在数组中找出两个加起来等于目标值的数，
+
+你给出的函数twoSum 需要返回这两个数字的下标（index1，index2），需要满足 index1 小于index2.。注意：下标是从1开始的
+
+假设给出的数组中只存在唯一解
+
+例如：
+
+给出的数组为 {20, 70, 110, 150},目标值为90
+输出 index1=1, index2=2
+
+## 思路：哈希
+
+哈希表中存元素值和下标值，遍历数组中的每一个数字，并和target求差值
+
+- 如果能找到返回哈希表中的下标值和数组下标值
+- 没找到就插入这个元素到哈希表
+
+```c++
+class Solution {
+public:
+    /**
+     * 
+     * @param numbers int整型vector 
+     * @param target int整型 
+     * @return int整型vector
+     */
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        // write code here
+        unordered_map<int, int> uMap;
+        vector<int> ret;
+        size_t i = 0;
+        for(; i < numbers.size(); ++i)
+        {
+            int tmp = target -numbers[i];
+            if(uMap.count(tmp))
+            {
+                ret.push_back(uMap[tmp]+1);
+                ret.push_back(i+1);
+                break;
+            }
+            else
+                uMap[numbers[i]] = i;
+        }
+        
+        return ret;
+    }
+};
+```
+
+# [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+
+找出数组中重复的数字。
+
+
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+
+示例 1：
+
+输入：
+[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 
+
+## 思路1：
+
+首先定义一个map存储数组中的元素，没存储一个就将将该元素bool值置为true
+
+1. 遍历数组中的元素并存入map中
+2. 如果这个元素bool值为true说明重复，直接返回元素
+3. 否则将该值存map中并置true
+
+时间空间复杂度均为O(N)
+
+```c++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        unordered_map<int, bool> nMap;
+        for(auto& n: nums)
+        {
+            if(nMap[n])
+                return n;
+            nMap[n] = true;
+        }
+        return -1;
+    }
+};
+```
+
+## 思路2：
+
+原地置换
+
+数组的下标用i表示
+
+数组的第i个元素的值nums[i]
+
+如果想让数组的第i个元素的值nums[i]在数组下标nums[i]的位置：nums[i] == nums[nums[i]]
+
+1. 遍历数组nums
+2. 如果数组nums的第i个数字的值nums[i]和数组下标刚好对应继续遍历
+3. 如果数字在对应下标的位置说明重复直接返回
+4. 都不是直接将数字交换对应下标的地方去
+
+```c++
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int i = 0;
+        while(i < nums.size())
+        {
+            //1.数字在对应下标数组位置i++
+            if(nums[i] == i)
+            {
+                i++;
+                continue;
+            }
+            //2.数字在对应下标位置说明重复
+            if(nums[i] == nums[nums[i]])
+            {
+                return nums[i];
+            }
+            std::swap(nums[i], nums[nums[i]]);
+        }
+        return -1;
+    }
+};
+```
+
+#
 

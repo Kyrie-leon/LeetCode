@@ -399,3 +399,74 @@ int main()
 }
 ```
 
+# **NC61** **两数之和**
+
+描述
+
+给出一个整数数组，请在数组中找出两个加起来等于目标值的数，
+
+你给出的函数twoSum 需要返回这两个数字的下标（index1，index2），需要满足 index1 小于index2.。注意：下标是从1开始的
+
+假设给出的数组中只存在唯一解
+
+例如：
+
+给出的数组为 {20, 70, 110, 150},目标值为90
+输出 index1=1, index2=2
+
+示例1
+
+输入：
+
+```
+[3,2,4],6
+```
+
+复制
+
+返回值：
+
+```
+[2,3]
+```
+
+复制
+
+说明：
+
+```
+因为 2+4=6 ，而 2的下标为2 ， 4的下标为3 ，又因为 下标2 < 下标3 ，所以输出[2,3] 
+```
+
+## 思路：哈希表
+
+一边遍历数组一边往哈希表中存储，哈希表中存储数组元素val和下标index，如果能找到target-hashMap[i]，则将下标+1返回即可
+
+```c++
+class Solution {
+public:
+    /**
+     * 
+     * @param numbers int整型vector 
+     * @param target int整型 
+     * @return int整型vector
+     */
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        // write code here
+        vector<int> ret;
+        unordered_map<int, int> hashMap;
+        for(size_t i = 0; i < numbers.size(); ++i){
+            if(hashMap.find(target - numbers[i]) != hashMap.end()){
+                ret.push_back(hashMap[target - numbers[i]] + 1);
+                ret.push_back(i+1);
+            }
+            else{
+                hashMap[numbers[i]] = i;
+            }
+        }
+        
+        return ret;
+    }
+};
+```
+
