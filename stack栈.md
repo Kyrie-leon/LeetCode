@@ -1,4 +1,67 @@
-# day7
+# 匹配问题
+
+#### [1047. 删除字符串中的所有相邻重复项](https://leetcode-cn.com/problems/remove-all-adjacent-duplicates-in-string/)
+
+难度简单281
+
+给出由小写字母组成的字符串 `S`，**重复项删除操作**会选择两个相邻且相同的字母，并删除它们。
+
+在 S 上反复执行重复项删除操作，直到无法继续删除。
+
+在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
+
+ 
+
+**示例：**
+
+```
+输入："abbaca"
+输出："ca"
+```
+
+
+
+
+
+### 思路：栈+reverse
+
+栈为空就将字符入栈
+
+栈不为空两种情况：
+
+- 栈顶和数组中元素相同出栈同时指针后移
+- 不相同就入栈
+
+
+
+```c++
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        string ret;
+        stack<char> st;
+        for(auto& e:s)
+        {
+            if(st.empty() || st.top() != e){
+                st.push(e);
+            }
+            else{
+                    st.pop();
+            }
+        }
+
+        while(!st.empty())
+        {
+            ret.push_back(st.top());
+            st.pop();
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
+```
+
+
 
 ### 有效括号
 
@@ -123,3 +186,33 @@ private:
  * int param_2 = obj->deleteHead();
  */
 ```
+
+```
+class Solution
+{
+public:
+    void push(int node) {
+        stack1.push(node);
+    }
+
+    int pop() {
+        if(stack2.empty())
+        {
+            while(!stack1.empty())
+            {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+        
+        int tmp = stack2.top();
+        stack2.pop();
+        return tmp;
+    }
+
+private:
+    stack<int> stack1;    //ru
+    stack<int> stack2;    //chu
+};
+```
+
